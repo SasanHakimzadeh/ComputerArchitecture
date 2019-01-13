@@ -1,0 +1,16 @@
+In creating my cache, the two main data structures I created included a cache block struct and a cache set struct, both which could be found in my first.h file.
+
+typedef struct cacheBlock {
+	unsigned long tag;
+	int valid;
+	int LRUcount;
+} cacheBlock;
+
+typedef struct cacheSet {
+	cacheBlock* blocksInSet;
+	int	nextIndexToWrite;
+} cacheSet;
+
+I have also completed the extra credit portion of this assignment which can be seen implemented in my code. I discuss how I implemented the Least Recently Used policy in my code below. 
+
+As the name suggests, the cacheBlock struct is just one block in the cache, and the unsigned long tag shows its tag while the valid field determines whether or not the block is valid. In order to find the least recently used block in a set, I used LRUcount which keeps track of how recently the block has been used. The higher the number, the less recent it is. Note that this is only the case when the cache policy is set to LRU. It starts at 0 and whenever another block has been used, it is increased. The cacheSet struct illustrates a set in the cache. The entire cache was just an array of cacheSets. The blocksInSet field shows all of the blocks in the set in the form of an array, as seen above. Lastly, the nextIndexToWrite field stores the next block to overwrite in an int variable. When using the prefetch method, it is clear that there are more reads and hits which is plausible because of the fact that prefetch increases spatial locality and takes advantage of adjacent blocks already existing in the cache.
